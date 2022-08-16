@@ -21,14 +21,24 @@ router.post("/login.html", (req,res,next) => {
                     if (crypto.createHash('sha256').update(req.body.password + dbres.rows[0].passsalt).digest('hex') == dbres.rows[0].passhash) {
                         req.session.loggedIn = true;
                         req.session.username = req.body.username; 
-                        res.redirect("/");
+
+                        res.statusCode = 302
+                        res.setHeader('Location', '/')
+                        res.write('Redirecting')
+                        res.end()
                     } else {
-                        res.redirect("/login.html")
+                        res.redirect("/login.html");
                     }
                 }
             })
         })
     }
+});
+
+router.get("/logout.html", (req,res,next) => {
+    req.session.loggedIn = false;
+    req.session.username = undefined;
+    next()
 });
 
 module.exports = router

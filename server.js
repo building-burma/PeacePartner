@@ -8,9 +8,7 @@ const bodyParser = require('body-parser')
 const multer = require('multer');
 const upload = multer();
 
-
 // other imports
-const fs = require("fs");
 
 // get constants from config file
 const { WEBAPPPORT, SESSIONSECRET } = require(__dirname + "/config.json");
@@ -31,7 +29,7 @@ app.all("*",(req,res,next) => {
 });
 
 app.use(require(__dirname + "/Routes/home"));
-app.use(require(__dirname + "/Routes/login"));
+app.use(require(__dirname + "/Routes/auth"));
 app.use(express.static(__dirname + "/static"));
 
 // 404 page
