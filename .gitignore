@@ -1,1 +1,3 @@
 /postgres.db/
+/node_modules/
+/postgres.log
