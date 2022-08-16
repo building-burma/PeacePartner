@@ -1,0 +1,25 @@
+{
+  "name": "peacepartner",
+  "version": "1.0.0",
+  "description": "Sponsor matching for people seeking refuge.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/building-burma/PeacePartner.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/building-burma/PeacePartner/issues"
+  },
+  "homepage": "https://github.com/building-burma/PeacePartner#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.7.3"
+  }
+}

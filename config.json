@@ -1,0 +1,6 @@
+{
+    "WEBAPPPORT": 8080,
+    "POSTGRESPORT": 5432,
+    "POSTGRESDATABASE": "PeacePartner",
+    "SESSIONSECRET": "Jz9dtj6KUpIpBfb86wQx"
+}
