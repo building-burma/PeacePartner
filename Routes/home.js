@@ -2,12 +2,12 @@
 const express = require("express");
 const router = express.Router(); 
 
-router.get(["/","/index.html","/index"], (req,res) => {
+router.get(["/home","/home.html","/homepage"], (req,res) => {
     // check if logged in
-    if (req.session.loggedIn != true) {
+    if (req.session.loggedIn !== true) {
         res.redirect("/login.html"); 
     }
-    res.send("Home page, hello " + req.session.username)
+    res.sendFile(__dirname + "../templates/home.html")
 });
 
 module.exports = router
