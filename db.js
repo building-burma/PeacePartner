@@ -1,10 +1,14 @@
+// using a postgres connection pool
 const { Pool } = require("pg");
 
-const { POSTGRESPORT, POSTGRESDATABASE } = require("./config.json");
+// grabbing constants from config.json
+const { POSTGRESPORT, POSTGRESDATABASE, POSTGRESPOOLSIZE } = require("./config.json");
 
+// configuring pool
 const pool = new Pool({
     port: POSTGRESPORT,
-    database: POSTGRESDATABASE
+    database: POSTGRESDATABASE,
+    max: POSTGRESPOOLSIZE
 });
 
 pool.on("error", (err) => {
