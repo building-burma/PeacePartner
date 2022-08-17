@@ -7,8 +7,10 @@ router.get(["/home","/home.html","/homepage"], (req,res) => {
     if (req.session.loggedIn !== true) {
         res.redirect("/login.html"); 
     }
+    let paragraphs = ["hello","hello 2"], name = req.session.username;
     res.render("home", {
-        name: req.session.username
+        name,
+        paragraphs
     });
 });
 
