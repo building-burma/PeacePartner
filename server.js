@@ -13,6 +13,9 @@ const upload = multer();
 // get constants from config file
 const { WEBAPPPORT, SESSIONSECRET } = require(__dirname + "/config.json");
 
+app.set('view engine', 'pug');
+app.set('views','./templates');
+
 app.use(session({
     secret: SESSIONSECRET,
     resave: true,

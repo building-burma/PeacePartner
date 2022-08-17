@@ -7,7 +7,9 @@ router.get(["/home","/home.html","/homepage"], (req,res) => {
     if (req.session.loggedIn !== true) {
         res.redirect("/login.html"); 
     }
-    res.sendFile(__dirname + "../templates/home.html")
+    res.render("home", {
+        name: req.session.username
+    });
 });
 
 module.exports = router
