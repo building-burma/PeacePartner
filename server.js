@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-
 app.use(upload.array()) // for parsing application/x-www-form-urlencoded
 
 app.all("*",(req,res,next) => {
-    console.log("Recieved request from: " + req.ip);
+    console.log(`Recieved request from ${req.ip} for ${req.path}`);
     next();
 });
 
