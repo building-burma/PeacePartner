@@ -1,6 +1,5 @@
-doctype html
-html
-    head
-        title PeacePartner | #{name}
-    body
-        p#greeting Hello #{name}
+include base
+    div
+        h2 Welcome #{name}
+        for val in paragraphs
+            p #{val}
