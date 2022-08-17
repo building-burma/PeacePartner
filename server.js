@@ -9,12 +9,22 @@ const multer = require('multer');
 const upload = multer();
 
 // other imports
+const path = require("path");
 
 // get constants from config file
 const { WEBAPPPORT, SESSIONSECRET } = require(__dirname + "/config.json");
 
+// for usage of pug templating
 app.set('view engine', 'pug');
 app.set('views','./templates');
+
+// use sass middleware
+// sass files are stored in /static/css, and are accessible by users as css files in /static/css
+app.use(require('node-sass-middleware')({
+    src: path.join(__dirname, '/static'),
+    dest: path.join(__dirname, '/static'),
+    debug: false // false is the default
+}));
 
 app.use(session({
     secret: SESSIONSECRET,
