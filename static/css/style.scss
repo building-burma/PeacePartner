@@ -1,0 +1,89 @@
+$blue: #0057B7;
+$yellow: #FFDD00;
+$orange: #FE9000;
+$red: #F54E3B;
+
+$text: #fff;
+$texttwo: #cbcbcb;
+
+@mixin breakpoint($size) {
+  @if $size == mobile {
+    @media (max-width: 599px) { @content; }
+  } @else if $size == tablet-portrait-up {
+    @media (min-width: 600px) { @content; }
+  } @else if $size == tablet-landscape-up {
+    @media (min-width: 900px) { @content; }
+  } @else if $size == desktop-up {
+    @media (min-width: 1200px) { @content; }
+  } @else if $size == big-desktop-up {
+    @media (min-width: 1800px) { @content; }
+  }
+}
+
+html,body {
+  margin:0;
+  padding:0;
+}
+
+main {
+  background: $blue;
+  display: flex;
+  flex-direction: column;
+
+  div {
+    position: absolute;
+  }
+
+  #firsthalf {
+    background-color: $blue;
+    height: 50vh;
+    width: 100vw;
+  }
+
+  #secondhalf {
+    background-color: $yellow;
+    top: 50vh;
+    height: 50vh;
+    width: 100vw;
+  }
+
+  #container {
+    background-color: #323238;
+    height: 80vh;
+    top: 10vh;
+    border-radius: 40px;
+
+    @include breakpoint(mobile) {
+      width: 96vw;
+      left: calc(4vw/2);
+    }
+    @include breakpoint(tablet-portrait-up) {
+      width: 80vw;
+      left: calc(20vw/2);
+    }
+    @include breakpoint(desktop-up) {
+      width: 60vw;
+      left: calc(40vw/2);
+    }
+    @include breakpoint(big-desktop-up) {
+      width: 50vw;
+      left: calc(50vw/2);
+    }
+
+    div {
+      margin: 20px;
+      h2 {
+        color: $text;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      p {
+        color: $text;
+      }
+    }
+  }
+}
+
+span {
+  color: $text;
+}
