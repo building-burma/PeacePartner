@@ -1,7 +1,7 @@
 {
-    "WEBAPPPORT": 8080, // specifies the port the webapp will run on. in production likely either 443 or 80
-    "POSTGRESPORT": 5432, // port of the postgresql server. 5432 is the default
-    "POSTGRESDATABASE": "PeacePartner", // name of the postgres database
-    "POSTGRESPOOLSIZE": 20, // size of the postgresql connection pool.
-    "SESSIONSECRET": "Jz9dtj6KUpIpBfb86wQx" // this is the secret used for cookie encryption. must stay secret
+    "WEBAPPPORT": 8080,
+    "POSTGRESPORT": 5432,
+    "POSTGRESDATABASE": "PeacePartner",
+    "POSTGRESPOOLSIZE": 20,
+    "SESSIONSECRET": "Jz9dtj6KUpIpBfb86wQx"
 }
