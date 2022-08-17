@@ -10,9 +10,11 @@ const upload = multer();
 
 // other imports
 const path = require("path");
+const logger = require("./logger");
 
 // get constants from config file
 const { WEBAPPPORT, SESSIONSECRET } = require(__dirname + "/config.json");
+
 
 // for usage of pug templating
 app.set('view engine', 'pug');
@@ -32,12 +34,14 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use(bodyParser.json())
+app.use(bodyParser.json()) // for parsing json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(upload.array()) // for parsing application/x-www-form-urlencoded
 
+// logging of requests happens here. all requests first pass through here. banning/blacklisting of ips
+// should also happen here.
 app.all("*",(req,res,next) => {
-    console.log(`Recieved request from ${req.ip} for ${req.path}`);
+    logger(`Recieved request from ${req.ip} for ${req.path}`)
     next();
 });
 
