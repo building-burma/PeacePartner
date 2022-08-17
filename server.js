@@ -15,7 +15,6 @@ const logger = require("./logger");
 // get constants from config file
 const { WEBAPPPORT, SESSIONSECRET } = require(__dirname + "/config.json");
 
-
 // for usage of pug templating
 app.set('view engine', 'pug');
 app.set('views','./templates');
