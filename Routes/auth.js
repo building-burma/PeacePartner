@@ -18,12 +18,12 @@ router.post("/login.html", (req,res,next) => {
                     // TODO: handle err
                 } else {
                     console.log(dbres.rows[0])
-                    if (crypto.createHash('sha256').update(req.body.password + dbres.rows[0].passsalt).digest('hex') == dbres.rows[0].passhash) {
+                    if (crypto.createHash('sha256').update(req.body.password + dbres.rows[0].passsalt).digest('hex') === dbres.rows[0].passhash) {
                         req.session.loggedIn = true;
                         req.session.username = req.body.username; 
 
                         res.statusCode = 302
-                        res.setHeader('Location', '/')
+                        res.setHeader('Location', '/home.html')
                         res.write('Redirecting')
                         res.end()
                     } else {
@@ -34,6 +34,12 @@ router.post("/login.html", (req,res,next) => {
         })
     }
 });
+
+router.post("/register.html", (req,res,next) => {
+    // TODO: verify all input
+    // TODO: create new database entry
+    // TODO: redirect to login
+})
 
 router.get("/logout.html", (req,res,next) => {
     req.session.loggedIn = false;
