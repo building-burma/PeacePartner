@@ -55,5 +55,5 @@ window.onload = () => {
         if (!valid) {
             e.preventDefault();
         }
-    });
+    }
 }
