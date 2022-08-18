@@ -1,30 +1,41 @@
-const form = document.getElementById("register_form");
+
+// simple function for iterating through a list of dom nodes and setting the display value
+// useful for showing and hiding stuff
+function setDisplay(domElementList, displayvalue) {
+    Array.from(domElementList).forEach((i) => {
+        i.style.display = displayvalue;
+    })
+}
 
 window.onload = () => {
-    const sponsorArray = Array.from(document.getElementsByClassName("sponsor"));
-    const refugeeArray = Array.from(document.getElementsByClassName("refugee"));
-    const afterChoiceArray = Array.from(document.getElementsByClassName("after-choice"));
+    const form = document.getElementById("register_form");
+    const sponsors = document.getElementsByClassName("sponsor");
+    const refugees = document.getElementsByClassName("refugee");
+    const country = document.getElementById("country");
+    const prefcountry = document.getElementById("prefcountry");
+    const pets = document.getElementById("pets")
+    const pettypediv = document.getElementById("pettypediv")
+
+    pets.onchange = (e) => {
+        pettypediv.innerHTML = "";
+        for (let i = 0; i < pets.value; i++) {
+            let petidentifier = "pet" + i;
+            pettypediv.innerHTML += `<br><label for='${petidentifier}'>Enter pet type</label><input type='text' name='${petidentifier}' id='${petidentifier}'>`;
+        }
+    }
 
     form.onchange = (e) => {
-        afterChoiceArray.forEach((i) => {
-            i.style.display = "block";
-        });
+        setDisplay(document.getElementsByClassName("after-choice"), "block")
+
+        document.getElementsByClassName("state")[0].style.display = (country.value === "US" || prefcountry.value === "US") ? "block" : "none";
 
         if (form.elements['type'].value === "SP") {
-            sponsorArray.forEach((i) => {
-                i.style.display = "block";
-            })
-            refugeeArray.forEach((i) => {
-                i.style.display = "none";
-            })
+            setDisplay(sponsors, "block") // show sponsor elements
+            setDisplay(refugees, "none") // hide refugee elements
         }
         if (form.elements['type'].value === "RU") {
-            sponsorArray.forEach((i) => {
-                i.style.display = "none";
-            })
-            refugeeArray.forEach((i) => {
-                i.style.display = "block";
-            })
+            setDisplay(sponsors, "none") // hide sponsor elements
+            setDisplay(refugees, "block") // show refugee elements
         }
     }
 }
