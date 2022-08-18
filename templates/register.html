@@ -15,7 +15,7 @@
     <div class="after-choice">
         <br>
         <label class="" for="accommodatenum">Number of people to accommodate: </label>
-        <input type="number" name="accomodatenum" id="accommodatenum" min="1" value="1" required>
+        <input type="number" name="accommodatenum" id="accommodatenum" min="1" value="1" required>
     </div>
 
     <div class="sponsor">
@@ -414,7 +414,9 @@
         <input type="text" name="username" id="username" required>
         <br>
         <label for="password">Enter a password</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" required>
+        <input type="hidden" name="passhash">
+        <input type="hidden" name="passsalt">
         <br>
         <button type="submit">Submit</button>
     </div>
