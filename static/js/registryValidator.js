@@ -1,3 +1,4 @@
+import SHA256 from "./SHA256.js";
 
 // simple function for iterating through a list of dom nodes and setting the display value
 // useful for showing and hiding stuff
@@ -5,6 +6,17 @@ function setDisplay(domElementList, displayvalue) {
     Array.from(domElementList).forEach((i) => {
         i.style.display = displayvalue;
     })
+}
+
+function gensalt(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
 }
 
 window.onload = () => {
@@ -40,8 +52,9 @@ window.onload = () => {
     }
 
     form.onsubmit = (e) => {
+        e.preventDefault();
         let valid = true;
-        let target = form.elements['type'] === "SP" ? "reqsponsor" : "reqrefugee";
+        let target = form.elements['type'].value === "SP" ? "reqsponsor" : "reqrefugee";
         Array.from(document.getElementsByClassName(target)).forEach((i) => {
             if (i.value === "" && i.type !== "file") {
                 alert(i.previousElementSibling.innerHTML + "has not been filled in")
@@ -52,8 +65,11 @@ window.onload = () => {
             alert("Picture has not been filled in");
             valid = false;
         }
-        if (!valid) {
-            e.preventDefault();
+        if (valid) {
+            let pass = document.querySelector("#password").value;
+            let salt = form.elements['passsalt'].value = gensalt(128);
+            form.elements['passhash'].value = SHA256(pass+salt);
+            form.submit();
         }
     }
 }
