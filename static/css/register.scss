@@ -2,8 +2,18 @@
   display: none;
 }
 
+main #container {
+  overflow-y: scroll;
+  height: 100vh;
+  top: 0;
+  border-radius: 0;
+}
+
 form {
+  color: white;
+  display: block;
   div {
+    display: block;
     margin: 5px;
   }
 }
