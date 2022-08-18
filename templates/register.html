@@ -8,20 +8,20 @@
 
     <div class="after-choice">
         <br>
-        <label for="name">Full name: </label>
-        <input type="text" name="name" id="name">
+        <label for="name">Full name </label>
+        <input type="text" name="name" id="name" required>
     </div>
 
     <div class="after-choice">
         <br>
         <label class="" for="accommodatenum">Number of people to accommodate: </label>
-        <input type="number" name="accomodatenum" id="accommodatenum" min="1" value="1">
+        <input type="number" name="accomodatenum" id="accommodatenum" min="1" value="1" required>
     </div>
 
     <div class="sponsor">
         <br>
-        <label for="familycomp">Household composition: </label>
-        <select name="familycomp" id="familycomp">
+        <label for="familycomp">Household composition </label>
+        <select name="familycomp" id="familycomp" class="reqsponsor">
             <option value="SM">Single male</option>
             <option value="SF">Single female</option>
             <option value="FA">Family</option>
@@ -30,8 +30,8 @@
 
     <div class="sponsor">
         <br>
-        <label for="country">Country: </label>
-        <select name="country" id="country">
+        <label for="country">Country </label>
+        <select name="country" id="country" class="reqsponsor">
             <option value="CA">Canada</option>
             <option value="GB">United Kingdom</option>
             <option value="US">United States</option>
@@ -40,20 +40,20 @@
 
     <div class="sponsor">
         <br>
-        <label for="city">City: </label>
-        <input type="text" name="city" id="city">
+        <label for="city">City </label>
+        <input type="text" name="city" id="city" class="reqsponsor">
     </div>
 
     <div class="refugee">
         <br>
-        <label for="currcity">Current city: </label>
-        <input type="text" name="currcity" id="currcity">
+        <label for="currcity">Current city </label>
+        <input type="text" name="currcity" id="currcity" class="reqrefugee">
     </div>
 
     <div class="refugee">
         <br>
-        <label for="currcountry">Current country: </label>
-        <select name="currcountry" id="currcountry">
+        <label for="currcountry">Current country </label>
+        <select name="currcountry" class="reqrefugee" id="currcountry">
                                                <option value="AF">Afghanistan</option>
                                                <option value="AX">Åland Islands</option>
                                                <option value="AL">Albania</option>
@@ -308,8 +308,8 @@
 
     <div class="refugee">
         <br>
-        <label for="pets">Pets: </label>
-        <input type="number" name="pets" min="0" value="0" id="pets">
+        <label for="pets">Pets </label>
+        <input type="number" name="pets" min="0" value="0" id="pets" class="reqrefugee">
         <br>
         <div id="pettypediv">
 
@@ -318,8 +318,8 @@
 
     <div class="refugee">
         <br>
-        <label for="prefcountry">Preferred country: </label>
-        <select name="prefcountry" id="prefcountry">
+        <label for="prefcountry">Preferred country </label>
+        <select name="prefcountry" id="prefcountry" class="reqrefugee">
             <option value="CA">Canada</option>
             <option value="GB">United Kingdom</option>
             <option value="US">United States</option>
@@ -328,7 +328,7 @@
 
     <div class="state after-choice">
         <br>
-        <label for="state">In case of USA, state: </label>
+        <label for="state">State </label>
         <select id="state" name="state" class="">
             <option value="AL">Alabama (AL)</option>
             <option value="AK">Alaska (AK)</option>
@@ -392,29 +392,29 @@
 
     <div class="refugee">
         <br>
-        <label for="prefcity">Preferred city: </label>
-        <input type="text" name="prefcity" id="prefcity">
+        <label for="prefcity">Preferred city </label>
+        <input type="text" name="prefcity" id="prefcity" class="reqrefugee">
     </div>
 
     <div class="refugee">
         <br>
-        <label for="special">Any special neeeds?: </label> <br>
+        <label for="special">Any special needs? </label> <br>
         <textarea name="special" id="special" cols="30" rows="10"></textarea>
     </div>
 
     <div class="refugee">
         <br>
         <label for="picture">Upload a clear picture of your face.</label> <br>
-        <input type="file" name="picture" id="picture">
+        <input type="file" value="." name="picture" id="picture" class="reqrefugee">
     </div>
 
     <div class="after-choice">
         <br>
         <label for="username">Enter a username</label>
-        <input type="text" name="username" id="username">
+        <input type="text" name="username" id="username" required>
         <br>
         <label for="password">Enter a password</label>
-        <input type="password" id="password" name="password">
+        <input type="password" id="password" name="password" required>
         <br>
         <button type="submit">Submit</button>
     </div>

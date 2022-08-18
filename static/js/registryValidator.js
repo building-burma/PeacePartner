@@ -38,4 +38,22 @@ window.onload = () => {
             setDisplay(refugees, "block") // show refugee elements
         }
     }
+
+    form.onsubmit = (e) => {
+        let valid = true;
+        let target = form.elements['type'] === "SP" ? "reqsponsor" : "reqrefugee";
+        Array.from(document.getElementsByClassName(target)).forEach((i) => {
+            if (i.value === "" && i.type !== "file") {
+                alert(i.previousElementSibling.innerHTML + "has not been filled in")
+                valid = false;
+            }
+        });
+        if (document.getElementById("picture").files.length === 0 && target === "reqrefugee") {
+            alert("Picture has not been filled in");
+            valid = false;
+        }
+        if (!valid) {
+            e.preventDefault();
+        }
+    });
 }
