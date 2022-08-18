@@ -25,6 +25,14 @@ html,body {
   padding:0;
 }
 
+form {
+  color: $text;
+}
+
+button {
+  color: black;
+}
+
 main {
   background: $blue;
   display: flex;

@@ -9,6 +9,13 @@ const db = require(__dirname + "/../db")
 const crypto = require("crypto");
 const fs = require("fs");
 
+router.get("/login.html", (req,res,next) => {
+   res.render("base", {
+       title: "Login",
+       content: fs.readFileSync(__dirname + "/../templates/login.html")
+   })
+});
+
 router.post("/login.html", (req,res,next) => {
     if (req.body.username && req.body.password) {
         db.connect((err, client, done) => {
@@ -38,6 +45,7 @@ router.post("/login.html", (req,res,next) => {
 
 router.get("/register.html", (req,res,next) => {
     res.render("base", {
+        title: "Register",
         extrastyle: '/css/register.css',
         extrascript: '/js/registryValidator.js',
         content: fs.readFileSync(__dirname + "/../templates/register.html")
