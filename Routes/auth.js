@@ -7,6 +7,7 @@ const db = require(__dirname + "/../db")
 
 // other imports 
 const crypto = require("crypto");
+const fs = require("fs");
 
 router.post("/login.html", (req,res,next) => {
     if (req.body.username && req.body.password) {
@@ -33,6 +34,14 @@ router.post("/login.html", (req,res,next) => {
             })
         })
     }
+});
+
+router.get("/register.html", (req,res,next) => {
+    res.render("base", {
+        extrastyle: '/css/register.css',
+        extrascript: '/js/registryValidator.js',
+        content: fs.readFileSync(__dirname + "/../templates/register.html")
+    });
 });
 
 router.post("/register.html", (req,res,next) => {
