@@ -53,6 +53,20 @@ router.get("/register.html", (req,res,next) => {
 });
 
 router.post("/register.html", (req,res,next) => {
+    let type = req.body.type;
+    let accomodatenum = (Number(req.body.accommodatenum) >= 0) ? Number(req.body.accommodatenum) : undefined;
+    let username = req.body.username // TODO: clean input
+    let passhash = req.body.passhash // TODO: clean input
+    let passsalt = req.body.passsalt // TODO: clean input
+    console.log(passhash)
+    console.log(passsalt)
+    if (type === "SP") { // if user is registering as a sponsor
+        let name = req.body.name; // TODO: clean input
+        let familycomp = (req.body.familycomp === "SM" || "SF" || "FA") ? req.body.familycomp : undefined;
+        let country = (req.body.country === "US" || "CA" || "UK") ? req.body.country : undefined;
+        let city = req.body.city;
+    }
+
     // TODO: verify all input
     // TODO: create new database entry
     // TODO: redirect to login
