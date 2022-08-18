@@ -5,6 +5,6 @@ const startdate = new Date();
 
 module.exports = function logger(string) {
     fs.appendFile(__dirname + `/logs/${startdate}.log`, string + "\n", (err) => {
-        console.error("Error logging");
+        // TODO: handle err
     });
 }
