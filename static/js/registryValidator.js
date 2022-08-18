@@ -1,21 +1,29 @@
 const form = document.getElementById("register_form");
 
 window.onload = () => {
+    const sponsorArray = Array.from(document.getElementsByClassName("sponsor"));
+    const refugeeArray = Array.from(document.getElementsByClassName("refugee"));
+    const afterChoiceArray = Array.from(document.getElementsByClassName("after-choice"));
+
     form.onchange = (e) => {
+        afterChoiceArray.forEach((i) => {
+            i.style.display = "block";
+        });
+
         if (form.elements['type'].value === "SP") {
-            Array.from(document.getElementsByClassName("sponsor")).forEach((i) => {
-                i.style.display = "inline-block";
+            sponsorArray.forEach((i) => {
+                i.style.display = "block";
             })
-            Array.from(document.getElementsByClassName("refugee")).forEach((i) => {
+            refugeeArray.forEach((i) => {
                 i.style.display = "none";
             })
         }
         if (form.elements['type'].value === "RU") {
-            Array.from(document.getElementsByClassName("refugee")).forEach((i) => {
-                i.style.display = "inline-block";
-            })
-            Array.from(document.getElementsByClassName("sponsor")).forEach((i) => {
+            sponsorArray.forEach((i) => {
                 i.style.display = "none";
+            })
+            refugeeArray.forEach((i) => {
+                i.style.display = "block";
             })
         }
     }
