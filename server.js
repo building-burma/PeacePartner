@@ -40,7 +40,7 @@ app.use(upload.array()) // for parsing application/x-www-form-urlencoded
 // logging of requests happens here. all requests first pass through here. banning/blacklisting of ips
 // should also happen here.
 app.all("*",(req,res,next) => {
-    logger(`Received request from ${req.ip} for ${req.path}`)
+    logger(`Received ${req.method} request from ${req.ip} for ${req.path}`)
     next();
 });
 
