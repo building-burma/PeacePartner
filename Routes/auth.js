@@ -56,10 +56,9 @@ router.post("/register.html", (req,res,next) => {
     let type = req.body.type;
     let accomodatenum = (Number(req.body.accommodatenum) >= 0) ? Number(req.body.accommodatenum) : undefined;
     let username = req.body.username // TODO: clean input
-    let passhash = req.body.passhash // TODO: clean input
-    let passsalt = req.body.passsalt // TODO: clean input
-    console.log(passhash)
-    console.log(passsalt)
+    // the following validates the length of the password hash (64) and that it is a hex string
+    let passhash = (req.body.passhash.length === 64 && req.body.passhash.match(/[0-9a-f]+/) === req.body.passhash) ? req.body.passhash : undefined;
+    let passsalt = (req.body.passsalt.length === 128) ? req.body.passsalt : undefined;
     if (type === "SP") { // if user is registering as a sponsor
         let name = req.body.name; // TODO: clean input
         let familycomp = (req.body.familycomp === "SM" || "SF" || "FA") ? req.body.familycomp : undefined;
