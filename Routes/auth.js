@@ -53,22 +53,162 @@ router.get("/register.html", (req,res,next) => {
 });
 
 router.post("/register.html", (req,res,next) => {
-    let type = req.body.type;
-    let accomodatenum = (Number(req.body.accommodatenum) >= 0) ? Number(req.body.accommodatenum) : undefined;
-    let username = req.body.username // TODO: clean input
-    // the following validates the length of the password hash (64) and that it is a hex string
-    let passhash = (req.body.passhash.length === 64 && req.body.passhash.match(/[0-9a-f]+/) === req.body.passhash) ? req.body.passhash : undefined;
-    let passsalt = (req.body.passsalt.length === 128) ? req.body.passsalt : undefined;
-    if (type === "SP") { // if user is registering as a sponsor
-        let name = req.body.name; // TODO: clean input
-        let familycomp = (req.body.familycomp === "SM" || "SF" || "FA") ? req.body.familycomp : undefined;
-        let country = (req.body.country === "US" || "CA" || "UK") ? req.body.country : undefined;
-        let city = req.body.city;
+    const i = req.body // i for inputs. code is way cleaner like this :0
+
+    const validGeneralInputs = {
+        type: i.type,
+        name: i.name, // TODO: clean input
+        accomodatenum: (Number(i.accommodatenum) >= 0) ? Number(i.accommodatenum) : undefined,
+        username: i.username, // TODO: clean input
+        passhash: (i.passhash.length === 64 && i.passhash.match(/[0-9a-f]+/)[0] === i.passhash) ? i.passhash : undefined,
+        passsalt: (i.passsalt.length === 128 && i.passsalt.match(/[0-9A-Za-z]+/)[0] === i.passsalt) ? i.passsalt : undefined,
+    }
+    
+    const requiredGeneralInputs = [
+        'type',
+        'name',
+        'accomodatenum',
+        'username',
+        'passhash',
+        'passsalt',
+    ];
+
+    const invalidError = () => {
+        res.send("Invalid input");
+        res.end()
     }
 
-    // TODO: verify all input
-    // TODO: create new database entry
-    // TODO: redirect to login
+    for (let n=0;n<requiredGeneralInputs.length;n++) {
+        if (!validGeneralInputs[n]) return invalidError();
+    }
+
+    let foreignid;
+
+    if (validGeneralInputs.type === "SP") {
+        // verify sponsor specific input
+        const validSponsorInputs = {
+            familycomp: (i.familycomp === "SM" || i.familycomp === "SF" || i.familycomp === "FA") ? i.familycomp : undefined,
+            country: (i.country === "US" || i.country ===  "CA" || i.country === "GB") ? i.country : undefined,
+            city: i.city,
+            state: i.state,
+        }
+
+        const requiredSponsorInputs = [
+            'familycomp',
+            'country',
+            'city',
+        ];
+        
+        for (let n=0;n<requiredSponsorInputs.length;n++) {
+            if (!validSponsorInputs[n]) return invalidError();
+        }
+
+        // create sponsors table entry
+        // * get id of last sponsor entry
+        // * create entry and save id for users table
+        db.connect((err, client, done) => {
+            if (!err) {
+                client.query('SELECT id FROM sponsors ORDER BY id DESC LIMIT 1',(iderr, idres) => {
+                    if (!iderr) {
+                        foreignid = idres.rows[0].id + 1; // TODO: validate if this is a number > 0. if nothing, id = 1
+                        client.query('INSERT INTO sponsors (id, familycomp, accommodatenum, country, city, state) VALUES ($1,$2,$3,$4,$5,$6);',
+                            [foreignid,
+                                validSponsorInputs.familycomp,
+                                validGeneralInputs.accomodatenum,
+                                validSponsorInputs.country,
+                                validSponsorInputs.city,
+                                validGeneralInputs.state
+                            ], (inserterr) => {
+                                if (!inserterr) {
+                                    createUser();
+                                }
+                                done();
+                            });
+                    }
+                });
+            }
+        })
+    }
+
+    if (validGeneralInputs.type === "RU") {
+        // verify refugee specific input
+        const validRefugeeInputs = {
+            currcity: i.currcity,
+            currcountry: i.currcountry,
+            prefcountry: (i.country === "US" || i.country ===  "CA" || i.country === "GB") ? i.country : undefined,
+            prefcity: i.city,
+            state: i.state,
+            pets: i.pets,
+            picture: i.picture,
+            special: i.special
+        }
+
+        const requiredRefugeeInputs = [
+            'currcity',
+            'prefcity',
+            'currcountry',
+            'prefcountry',
+            'pets',
+            'picture',
+        ];
+
+        for (let n=0;n<requiredRefugeeInputs.length;n++) {
+            if (!validRefugeeInputs[n]) return invalidError();
+        }
+
+        // create sponsors table entry
+        // * get id of last sponsor entry
+        // * create entry and save id for users table
+        db.connect((err, client, done) => {
+            if (!err) {
+                client.query('SELECT id FROM refugees ORDER BY id DESC LIMIT 1',(iderr, idres) => {
+                    if (!iderr) {
+                        foreignid = idres.rows[0].id + 1; // TODO: validate if this is a number > 0. if nothing, id = 1
+                        client.query('INSERT INTO refugees (id, currcity, currcountry, prefcity, prefcountry, prefstate, persons, pets, picture) VALUES ($1,$2,$3,$4,$5,$6);',
+                            [foreignid,
+                                validRefugeeInputs.currcity,
+                                validRefugeeInputs.currcountry,
+                                validRefugeeInputs.prefcity,
+                                validRefugeeInputs.prefcountry,
+                                validGeneralInputs.state,
+                                validGeneralInputs.accomodatenum,
+                                validRefugeeInputs.pets,
+                                validRefugeeInputs.picture,
+                            ], (inserterr) => {
+                                if (!inserterr) {
+                                    createUser();
+                                }
+                                done();
+                            });
+                    }
+                });
+            }
+        })
+
+    }
+
+    const createUser = () => {
+        db.connect((err, client, done) => {
+            if (!err) {
+                client.query('SELECT id FROM users ORDER BY id DESC LIMIT 1', (iderr,idres) => {
+                    const userid = idres.rows[0].id + 1; //TODO: you know.
+                    const foreignidName = (type === "SP") ? "sponsorId" : "refugeeId";
+                    client.query(`INSERT INTO users (id, type, name, username, passhash, passsalt, ${foreignidName}) VALUES ($1,$2,$3,$4,$5,$6,$7);`,
+                        [
+                            userid,
+                            (validGeneralInputs.type === "SP"),
+                            validGeneralInputs.name,
+                            validGeneralInputs.username,
+                            validGeneralInputs.passhash,
+                            validGeneralInputs.passsalt,
+                            foreignid
+                        ], (inserterr) => {
+                        res.send("success")
+                    })
+                })
+            }
+        });
+    }
 })
 
 router.get("/logout.html", (req,res,next) => {
