@@ -57,7 +57,7 @@ window.onload = () => {
         let target = form.elements['type'].value === "SP" ? "reqsponsor" : "reqrefugee";
         Array.from(document.getElementsByClassName(target)).forEach((i) => {
             if (i.value === "" && i.type !== "file") {
-                alert(i.previousElementSibling.innerHTML + "has not been filled in")
+                alert(i.previousElementSibling.innerHTML + " has not been filled in")
                 valid = false;
             }
         });
