@@ -7,7 +7,10 @@ const multer = require('multer');
 const upload = multer();
 
 // db access
-const db = require(__dirname + "/../db")
+const db = require(__dirname + "/../db");
+
+// for matching algorithm
+const matcher = require(__dirname + "/../matcher");
 
 // other imports 
 const crypto = require("crypto");
