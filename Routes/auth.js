@@ -44,11 +44,14 @@ router.post("/login.html", (req,res,next) => {
 });
 
 router.get("/register.html", (req,res,next) => {
-    res.render("base", {
+    let missingErrors = (req.query.missing) ? `The following field is missing: ${req.query.missing}` : "";
+    let usernameError = (req.query.usernameerr) ? `Username already exists` : "";
+    res.render("register", {
         title: "Register",
         extrastyle: '/css/register.css',
         extrascript: '/js/registryValidator.js',
-        content: fs.readFileSync(__dirname + "/../templates/register.html")
+        missingErrors,
+        usernameError,
     });
 });
 
