@@ -1,11 +1,13 @@
 # PeacePartner
+
 Sponsor matching for people seeking refuge.
 
 ## requirements
 
- * postgres installation
+* postgres installation
 
 ## structure
+
 ```text
 PeacePartner/
    | Routes/ -- contains routes for 
