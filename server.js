@@ -5,8 +5,7 @@ const app = express();
 
 // for parsing form data
 const bodyParser = require('body-parser')
-const multer = require('multer');
-const upload = multer();
+
 
 // other imports
 const path = require("path");
@@ -35,7 +34,6 @@ app.use(session({
 
 app.use(bodyParser.json()) // for parsing json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-app.use(upload.array()) // for parsing application/x-www-form-urlencoded
 
 // logging of requests happens here. all requests first pass through here. banning/blacklisting of ips
 // should also happen here.
@@ -46,6 +44,7 @@ app.all("*",(req,res,next) => {
 
 app.use(require(__dirname + "/Routes/home"));
 app.use(require(__dirname + "/Routes/auth"));
+app.use('/profile',require(__dirname + "/Routes/profile"));
 app.use(express.static(__dirname + "/static"));
 
 // 404 page
