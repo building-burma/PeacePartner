@@ -2,6 +2,10 @@
 const express = require("express");
 const router = express.Router(); 
 
+// file upload
+const multer = require('multer');
+const upload = multer();
+
 // db access
 const db = require(__dirname + "/../db")
 
