@@ -61,8 +61,8 @@ router.post("/register.html", upload.single("picture"),(req,res,next) => {
     const validGeneralInputs = {
         type: i.type,
         name: i.name, // TODO: clean input
-        accomodatenum: (Number(i.accommodatenum) >= 0) ? Number(i.accommodatenum) : undefined,
-        pets: (i.pets > 0) ? i.pets: undefined,
+        accommodatenum: (Number(i.accommodatenum) >= 0) ? Number(i.accommodatenum) : undefined,
+        pets: (i.pets >= 0) ? i.pets: undefined,
         username: i.username, // TODO: clean input
         passhash: (i.passhash.length === 64 && i.passhash.match(/[0-9a-f]+/)[0] === i.passhash) ? i.passhash : undefined,
         passsalt: (i.passsalt.length === 128 && i.passsalt.match(/[0-9A-Za-z]+/)[0] === i.passsalt) ? i.passsalt : undefined,
@@ -72,7 +72,7 @@ router.post("/register.html", upload.single("picture"),(req,res,next) => {
     const requiredGeneralInputs = [
         'type',
         'name',
-        'accomodatenum',
+        'accommodatenum',
         'pets',
         'username',
         'passhash',
@@ -85,8 +85,6 @@ router.post("/register.html", upload.single("picture"),(req,res,next) => {
     const retIfMissing = () => {
         if (missing.length !== 0) {
             res.redirect(`/register.html?missing=${missing}`);
-            console.log(`/register.html?missing=${missing[0]}`)
-            console.log('redirecting')
             res.end()
             return true;
         }
@@ -139,11 +137,10 @@ router.post("/register.html", upload.single("picture"),(req,res,next) => {
             const client = await db.connect();
             const sponsorIdRes = await client.query('SELECT id FROM sponsors ORDER BY id DESC LIMIT 1');
             foreignid = (sponsorIdRes.rows[0]) ? sponsorIdRes.rows[0].id + 1 : 1;
-            console.log('refugee')
             await client.query('INSERT INTO sponsors (id, familycomp, accommodatenum, pets, pettypes, country, city, state) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);',
                 [foreignid,
                 validSponsorInputs.familycomp,
-                validGeneralInputs.accomodatenum,
+                validGeneralInputs.accommodatenum,
                 validGeneralInputs.pets,
                 (validGeneralInputs.pettypes !== "") ? validGeneralInputs.pettypes : null,
                 validSponsorInputs.country,
@@ -198,7 +195,7 @@ router.post("/register.html", upload.single("picture"),(req,res,next) => {
                 validRefugeeInputs.prefcity,
                 validRefugeeInputs.prefcountry,
                 validGeneralInputs.state,
-                validGeneralInputs.accomodatenum,
+                validGeneralInputs.accommodatenum,
                 validGeneralInputs.pets,
                 (validGeneralInputs.pettypes !== "") ? validGeneralInputs.pettypes : null,
                 validRefugeeInputs.picture.buffer,]
@@ -214,7 +211,6 @@ router.post("/register.html", upload.single("picture"),(req,res,next) => {
             const client = await db.connect();
             const usernameCheck = await client.query('SELECT id FROM users WHERE username = $1',[validGeneralInputs.username]);
             if (usernameCheck.rows[0]) {
-                console.log('username exists');
                 // TODO: add invalid username behaviour
                 res.redirect('/register.html?usernameerr=1');
                 // TODO: delete sponsor/refugee entry
@@ -223,7 +219,6 @@ router.post("/register.html", upload.single("picture"),(req,res,next) => {
             const idres = await client.query('SELECT id FROM users ORDER BY id DESC LIMIT 1');
             const userid = (idres.rows[0]) ? idres.rows[0].id + 1 : 1; //TODO: you know.
             const foreignidName = (validGeneralInputs.type === "SP") ? "sponsorId" : "refugeeId";
-            console.log('create user')
             await client.query(`INSERT INTO users (id, type, name, username, email, passhash, passsalt, ${foreignidName}) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);`,
                 [userid,
                 (validGeneralInputs.type === "SP"),
