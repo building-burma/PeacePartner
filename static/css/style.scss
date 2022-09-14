@@ -6,6 +6,8 @@ $red: #F54E3B;
 $text: #fff;
 $texttwo: #cbcbcb;
 
+$matchbg: #505050;
+
 @mixin breakpoint($size) {
   @if $size == mobile {
     @media (max-width: 599px) { @content; }
@@ -63,6 +65,7 @@ main {
     height: 80vh;
     top: 10vh;
     border-radius: 40px;
+    overflow: scroll;
 
     @include breakpoint(mobile) {
       width: 96vw;
@@ -92,6 +95,19 @@ main {
         color: $text;
       }
     }
+  }
+}
+
+.matchdiv {
+  background-color: $matchbg;
+  padding: 10px;
+  border-radius: 20px;
+  p {
+    margin: 5px;
+  }
+  a {
+    margin: 5px;
+    color: $text;
   }
 }
 

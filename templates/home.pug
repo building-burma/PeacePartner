@@ -1,5 +1,47 @@
 include base
     div
         h2 Welcome #{name}
-        for match in matches
-            iframe(href="/profile?userid=#{match}")
+        if matches
+            p The following users were matched to you based on the information you have provided us.
+        each match in matches
+            div.matchdiv
+                h2=match.username
+                p Full name: #{match.name}
+                if match.type === true
+                    p Can accommodate #{match.accommodatenum} person(s)
+                else
+                    p #{match.persons} person(s) to accommodate
+                if match.familycomp
+                    - let famcomp;
+                    if match.familycomp === "SM"
+                        - famcomp = "Single Male"
+                    if match.familycomp === "SF"
+                        - famcomp = "Single Female"
+                    if match.familycomp === "SF"
+                        - famcomp = "Family"
+                    p Family composition: #{famcomp}
+                if match.currcountry
+                    p Current country: #{match.currcountry}
+                else
+                    p Country: #{match.country}
+                if match.currcity
+                    p Current city: #{match.currcity}
+                else
+                    p City: #{match.city}
+                if match.prefcity
+                    p Preferred city: #{match.prefcity}
+                if match.prefcountry
+                    p Preferred country: #{match.prefcountry}
+                if match.pets === 0
+                    p No pets
+                else
+                    p The following pets: #{match.pettypes}
+                if match.special
+                    p Other needs: #{match.special}
+                if match.picture
+                    img(src="data:image/png;base64," + match.picture,width="250px")
+                    br
+                if match.email
+                    a(href="mailto:" + match.email) Contact at #{match.email}
+
+

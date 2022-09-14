@@ -34,7 +34,7 @@ module.exports = (user) => {
                     citymatches += r.id;
                 }
                 if (rr.prefcountry === user.country &&
-                    user.accommodatenum >= rr.accommodatenum &&
+                    user.accommodatenum >= rr.persons &&
                     user.pets >= rr.pets) {
                     matches += r.id;
                 }

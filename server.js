@@ -44,7 +44,6 @@ app.all("*",(req,res,next) => {
 
 app.use(require(__dirname + "/Routes/home"));
 app.use(require(__dirname + "/Routes/auth"));
-app.use('/profile',require(__dirname + "/Routes/profile"));
 app.use(express.static(__dirname + "/static"));
 
 // 404 page
