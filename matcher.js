@@ -20,9 +20,13 @@ module.exports = (user) => {
                 if (sr.city === user.prefcity) {
                     citymatches += r.id;
                 }
+                let familycompcheck = true;
+                if (sr.familycomp === "SM") {
+                    familycompcheck = (user.familycomp !== "SF");
+                }
                 if (sr.country === user.prefcountry &&
                     sr.accommodatenum >= user.accommodatenum &&
-                    sr.pets >= user.pets) {
+                    sr.pets >= user.pets && familycompcheck) {
                     matches += r.id;
                 }
             } else {
@@ -33,9 +37,13 @@ module.exports = (user) => {
                 if (rr.prefcity === user.city) {
                     citymatches += r.id;
                 }
+                let familycompcheck = true;
+                if (user.familycomp === "SM") {
+                    familycompcheck = (rr.familycomp !== "SF");
+                }
                 if (rr.prefcountry === user.country &&
                     user.accommodatenum >= rr.persons &&
-                    user.pets >= rr.pets) {
+                    user.pets >= rr.pets && familycompcheck) {
                     matches += r.id;
                 }
             }
