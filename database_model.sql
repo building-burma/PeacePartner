@@ -1,6 +1,5 @@
 CREATE TABLE sponsors (
     id int not null unique primary key,
-    familycomp varchar(2) not null, -- family composition. Single male = SM, single female = SF, family = FA
     accommodatenum int not null, -- amount of refugees that can be accommodated
     pets int not null, -- amount of pets
     pettypes text,
@@ -25,6 +24,7 @@ CREATE TABLE refugees (
 CREATE TABLE users (
     id int not null unique primary key,
     type bool not null, -- true: Sponsor, false: refugee
+    familycomp varchar(2) not null, -- family composition. Single male = SM, single female = SF, family = FA
     name text not null, -- full name
     username text not null, -- username for login
     passhash varchar(256) not null, -- hash of password + passsalt

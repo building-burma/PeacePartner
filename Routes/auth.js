@@ -61,6 +61,7 @@ router.post("/register.html", upload.single("picture"),(req,res,next) => {
     const validGeneralInputs = {
         type: i.type,
         name: i.name, // TODO: clean input
+        familycomp: (i.familycomp === "SM" || i.familycomp === "SF" || i.familycomp === "FA") ? i.familycomp : undefined,
         accommodatenum: (Number(i.accommodatenum) >= 0) ? Number(i.accommodatenum) : undefined,
         pets: (i.pets >= 0) ? i.pets: undefined,
         username: i.username, // TODO: clean input
@@ -72,6 +73,7 @@ router.post("/register.html", upload.single("picture"),(req,res,next) => {
     const requiredGeneralInputs = [
         'type',
         'name',
+        'familycomp',
         'accommodatenum',
         'pets',
         'username',
@@ -109,14 +111,12 @@ router.post("/register.html", upload.single("picture"),(req,res,next) => {
     if (validGeneralInputs.type === "SP") {
         // verify sponsor specific input
         const validSponsorInputs = {
-            familycomp: (i.familycomp === "SM" || i.familycomp === "SF" || i.familycomp === "FA") ? i.familycomp : undefined,
             country: (i.country === "US" || i.country ===  "CA" || i.country === "GB") ? i.country : undefined,
             city: (i.city !== "") ? i.city : undefined,
             state: i.state,
         }
 
         const requiredSponsorInputs = [
-            'familycomp',
             'country',
             'city',
         ];
@@ -137,9 +137,8 @@ router.post("/register.html", upload.single("picture"),(req,res,next) => {
             const client = await db.connect();
             const sponsorIdRes = await client.query('SELECT id FROM sponsors ORDER BY id DESC LIMIT 1');
             foreignid = (sponsorIdRes.rows[0]) ? sponsorIdRes.rows[0].id + 1 : 1;
-            await client.query('INSERT INTO sponsors (id, familycomp, accommodatenum, pets, pettypes, country, city, state) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);',
+            await client.query('INSERT INTO sponsors (id, accommodatenum, pets, pettypes, country, city, state) VALUES ($1,$2,$3,$4,$5,$6,$7);',
                 [foreignid,
-                validSponsorInputs.familycomp,
                 validGeneralInputs.accommodatenum,
                 validGeneralInputs.pets,
                 (validGeneralInputs.pettypes !== "") ? validGeneralInputs.pettypes : null,
@@ -219,9 +218,10 @@ router.post("/register.html", upload.single("picture"),(req,res,next) => {
             const idres = await client.query('SELECT id FROM users ORDER BY id DESC LIMIT 1');
             const userid = (idres.rows[0]) ? idres.rows[0].id + 1 : 1; //TODO: you know.
             const foreignidName = (validGeneralInputs.type === "SP") ? "sponsorId" : "refugeeId";
-            await client.query(`INSERT INTO users (id, type, name, username, email, passhash, passsalt, ${foreignidName}) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);`,
+            await client.query(`INSERT INTO users (id, type, familycomp, name, username, email, passhash, passsalt, ${foreignidName}) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9);`,
                 [userid,
                 (validGeneralInputs.type === "SP"),
+                validGeneralInputs.familycomp,
                 validGeneralInputs.name,
                 validGeneralInputs.username,
                 validGeneralInputs.email,

@@ -21,7 +21,7 @@ module.exports = (user) => {
                     citymatches += r.id;
                 }
                 let familycompcheck = true;
-                if (sr.familycomp === "SM") {
+                if (r.familycomp === "SM") {
                     familycompcheck = (user.familycomp !== "SF");
                 }
                 if (sr.country === user.prefcountry &&
@@ -39,7 +39,7 @@ module.exports = (user) => {
                 }
                 let familycompcheck = true;
                 if (user.familycomp === "SM") {
-                    familycompcheck = (rr.familycomp !== "SF");
+                    familycompcheck = (r.familycomp !== "SF");
                 }
                 if (rr.prefcountry === user.country &&
                     user.accommodatenum >= rr.persons &&

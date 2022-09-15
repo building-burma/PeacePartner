@@ -21,13 +21,13 @@ include base
             input#pets.reqrefugee(type='number' name='pets' min='0' value='0')
             br
             #pettypediv
-        .sponsor
+        .after-choice
             br
             label(for='familycomp') Household composition
-            select#familycomp.reqsponsor(name='familycomp')
+            select#familycomp(name='familycomp' required='')
                 option(value='SM') Single male
                 option(value='SF') Single female
-                option(value='FA') Family
+                option(value='FA') Mixed
         .sponsor
             br
             label(for='country') Country
