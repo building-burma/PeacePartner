@@ -9,14 +9,14 @@ const bodyParser = require('body-parser')
 
 // other imports
 const path = require("path");
-const logger = require("./logger");
+const logger = require(__dirname + "/logger");
 
 // get constants from config file
 const { WEBAPPPORT, SESSIONSECRET } = require(__dirname + "/config.json");
 
 // for usage of pug templating
 app.set('view engine', 'pug');
-app.set('views','./templates');
+app.set('views',__dirname + '/templates');
 
 // use sass middleware
 // sass files are stored in /static/css, and are accessible by users as css files in /static/css
