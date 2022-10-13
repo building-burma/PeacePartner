@@ -2,15 +2,15 @@
 
 Sponsor matching for people seeking refuge.
 
-## requirements
+## Requirements
 
 * postgres installation
 * Node dependencies listed in package.json
 
 ## Noteworthy
-The "SESSIONSECRET" token in the config.json file MUST stay secret. This is the key used for cookie encryption. I recommend generating a new one before every server start.
+The "SESSIONSECRET" token in the config.json file MUST stay secret. This is the key used for cookie encryption. It's recommended to generate a new one before every server start.
 
-## structure
+## Structure
 
 ```text
 PeacePartner/
